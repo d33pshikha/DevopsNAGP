@@ -4,26 +4,35 @@ pipeline{
         maven "Maven 3.8.4"
     }
     stages{
-    stage("code checkout"){
-        steps{
-        sh "echo hello"
+        stage("Checkout"){
+            steps{
+                checkout scm
+            }
         }
-    }
-    stage("code build"){
-        steps{
-        sh "mvn clean"
+        stage("Build"){
+            steps{
+                sh "mvn install"
+            }
         }
-    }
-    stage("unit test"){
-        steps{
-        sh "mvn test"
+        stage("Unit Test"){
+            steps{
+                sh "mvn test"
+            }
         }
-    }
+         stage("Unit Testing"){
+            steps{
+                sh "mvn test"
+            }
+        }
+        stage("Sonar Analysis"){
+            steps{
+                withSonarQubeEnv("Test_sonar"){
+                    sh "mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar"
+                }
+            }
+        }
     }
     post{
-        always{
-            sh "echo job is completed"
-        }
         success{
             sh "echo success"
         }
