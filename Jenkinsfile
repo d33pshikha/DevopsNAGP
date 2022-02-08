@@ -45,15 +45,15 @@ pipeline{
             }
         }
         stage("Build Image"){
-	        steps {
-		        sh "docker build -t nagpImage:${BUILD_NUMBER} .”
-	        }
+		steps{
+			sh "docker build -t nagpImage:${BUILD_NUMBER} ."
+		}
         }
-        stage("Docker Deployment"){
-	        steps {
-		        sh "docker run —name nagpContainer -d -p 9050:9090 nagpImage:${BUILD_NUMBER}”
-	        }
-        }
+	stage("Docker Deployment"){
+		steps{
+			sh "docker run --name nagpContainer -d -p 9050:9090 nagpImage:${BUILD_NUMBER}"
+		}
+	}
     }
     post{
         success{
