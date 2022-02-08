@@ -26,7 +26,7 @@ pipeline{
                 }
             }
         }
-        stage ('Upload to artifactory') {
+        stage("Upload to artifactory") {
             steps {
                 rtMavenDeployer (
                     id: 'deployer',
@@ -44,14 +44,12 @@ pipeline{
                 )
             }
         }
-        stage('Build Image')
-        {
+        stage("Build Image"){
 	        steps {
 		        sh "docker build -t nagpImage:${BUILD_NUMBER} .”
 	        }
         }
-        stage('Docker Deployment')
-        {
+        stage("Docker Deployment"){
 	        steps {
 		        sh "docker run —name nagpContainer -d -p 9050:9090 nagpImage:${BUILD_NUMBER}”
 	        }
