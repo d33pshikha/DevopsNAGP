@@ -50,7 +50,7 @@ pipeline{
             sh "echo success"
         }
         failure{
-            sh "echo failed"
+            sh "echo failure"
         }
     }
 }
